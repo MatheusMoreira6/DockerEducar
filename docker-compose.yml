@@ -1,0 +1,22 @@
+services:
+    apache:
+        build:
+            context: ./docker/apache
+            dockerfile: Dockerfile
+        container_name: educar-apache
+        ports:
+            - "80:80"
+        volumes:
+            - ./dev:/var/www/html
+        depends_on:
+            - php
+        restart: unless-stopped
+
+    php:
+        build:
+            context: ./docker/php
+            dockerfile: Dockerfile
+        container_name: educar-php
+        volumes:
+            - ./dev:/var/www/html
+        restart: unless-stopped
