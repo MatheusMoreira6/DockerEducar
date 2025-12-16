@@ -4,27 +4,57 @@
 
 -   Docker
 -   Docker Compose
--   Porta **80** livre no host
+-   Porta **80** e **5432** livre no host
 
 ## Estrutura do projeto
 
-Os projetos que serão executados no ambiente Docker devem ser clonados dentro da pasta dev, localizada na raiz deste repositório.
+Os projetos que serão executados no ambiente Docker devem ser clonados dentro da pasta dev, criada na raiz deste repositório.
 Essa pasta será montada como volume no container e utilizada como diretório de trabalho do Apache/PHP.
 
-## Comandos
+## Parar serviços do sistema
 
-### Build da imagem
+#### Apache (porta 80)
 
 ```bash
-docker compose build --no-cache
+sudo systemctl stop apache2
 ```
 
-### Subir os containers
+#### PostgreSQL (porta 5432)
+
+```bash
+sudo systemctl stop postgresql
+```
+
+## Comandos Docker
+
+### Criar diretório de trabalho (`dev`)
+
+```bash
+mkdir dev
+```
+
+### Iniciar os containers
+
 ```bash
 docker compose up -d
 ```
 
-### Parar os containers
+### Encerrar os containers
+
 ```bash
 docker compose down
+```
+
+## Restaurar base
+
+### Criar o banco de dados
+
+```bash
+docker exec -it educar-postgres createdb -U postgres cidade_2025-12-16
+```
+
+### Restaurar o dump no banco criado
+
+```bash
+pg_restore -h localhost -p 5432 -U postgres -d cidade_2025-12-16 -j 15 /caminho/dump_cidade.pgbkp
 ```
