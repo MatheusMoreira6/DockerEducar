@@ -20,3 +20,21 @@ services:
         volumes:
             - ./dev:/var/www/html
         restart: unless-stopped
+
+    postgres:
+        build:
+            context: ./docker/postgres
+            dockerfile: Dockerfile
+        container_name: educar-postgres
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        restart: unless-stopped
+
+volumes:
+    pgdata:
