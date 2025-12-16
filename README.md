@@ -58,3 +58,19 @@ docker exec -it educar-postgres createdb -U postgres cidade_2025-12-16
 ```bash
 pg_restore -h localhost -p 5432 -U postgres -d cidade_2025-12-16 -j 15 /caminho/dump_cidade.pgbkp
 ```
+
+## Configuração do banco de dados
+
+Os projetos executados dentro da pasta `dev` devem utilizar `postgres` como host do banco de dados.
+
+Isso ocorre porque, no Docker Compose, os serviços se comunicam pela rede interna usando o nome do serviço como hostname.
+
+Exemplo de configuração:
+
+```env
+DB_HOST = "postgres"
+DB_PORT = "5432"
+DB_USER = "postgres"
+DB_PASS = "postgres"
+DB_NAME = "cidade_2025-12-16"
+```
