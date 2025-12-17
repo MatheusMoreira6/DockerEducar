@@ -51,4 +51,7 @@ RUN mkdir -p /var/lib/php/8.2/sessions && \
 # Configurações
 COPY php.ini /usr/local/etc/php/php.ini
 
+# Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 WORKDIR /var/www/html

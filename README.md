@@ -45,6 +45,12 @@ docker compose up -d
 docker compose down
 ```
 
+## Rodar Composer
+
+```bash
+docker exec -it educar-php composer install -d /var/www/html/projeto
+```
+
 ## Restaurar base
 
 ### Criar o banco de dados
