@@ -17,3 +17,9 @@ COPY conf/vhost.conf /usr/local/apache2/conf/extra/vhost.conf
 
 RUN grep -q "^IncludeOptional conf/extra/vhost.conf" /usr/local/apache2/conf/httpd.conf || \
     echo "IncludeOptional conf/extra/vhost.conf" >> /usr/local/apache2/conf/httpd.conf
+
+# Configura charset
+COPY conf/charset.conf /usr/local/apache2/conf/extra/charset.conf
+
+RUN grep -q "^IncludeOptional conf/extra/charset.conf" /usr/local/apache2/conf/httpd.conf || \
+    echo "IncludeOptional conf/extra/charset.conf" >> /usr/local/apache2/conf/httpd.conf

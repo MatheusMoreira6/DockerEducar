@@ -48,8 +48,20 @@ RUN mkdir -p /var/lib/php/8.2/sessions && \
     chown -R www-data:www-data /var/lib/php && \
     chmod 755 /var/lib/php/8.2/sessions
 
-# Configurações
+# Configurações PHP
 COPY php.ini /usr/local/etc/php/php.ini
+
+# Configurações de locale
+RUN apt-get update && apt-get install -y locales \
+    && sed -i -e '/END LC_COLLATE/i reorder-after <U00A0>\n<U0020><CAP>;<CAP>;<CAP>;<U0020>\nreorder-end' /usr/share/i18n/locales/pt_BR \
+    && localedef -i pt_BR -c -f ISO-8859-1 pt_BR \
+    && sed -i 's/# pt_BR.ISO-8859-1/pt_BR.ISO-8859-1/' /etc/locale.gen \
+    && sed -i 's/# pt_BR.UTF-8/pt_BR.UTF-8/' /etc/locale.gen \
+    && locale-gen
+
+ENV LANG=pt_BR.ISO-8859-1
+ENV LANGUAGE=pt_BR:pt
+ENV LC_ALL=pt_BR.ISO-8859-1
 
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
