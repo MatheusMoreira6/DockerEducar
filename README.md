@@ -51,6 +51,10 @@ docker compose down
 docker exec -it educar-php composer install -d /var/www/html/projeto
 ```
 
+> **Observação:** no container, o caminho `/var/www/html` é um volume espelhado com a pasta `dev` do projeto no host.  
+> Portanto, substitua `projeto` pelo nome da pasta que está dentro de `dev` onde você deseja executar o Composer.  
+> Exemplo: se o projeto estiver em `dev/meu-projeto`, utilize `-d /var/www/html/meu-projeto`.
+
 ## Restaurar base
 
 ### Criar o banco de dados
@@ -80,3 +84,11 @@ DB_USER = "postgres"
 DB_PASS = "postgres"
 DB_NAME = "cidade_2025-12-16"
 ```
+
+## Permissões de Pasta (Usuário + Apache)
+
+```bash
+sudo chown -R seu_usuario:www-data dev/
+```
+
+> Execute este comando **somente após** os projetos já estarem na pasta `dev` e configurados (ex.: branch correta), para evitar problemas de permissão entre usuário e Apache.
