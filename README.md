@@ -34,10 +34,18 @@ sudo systemctl stop postgresql
 
 ## Comandos Docker
 
-### Criar diretório de trabalho (`dev`)
+### Criar diretório de projetos (`dev`)
 
 ```bash
 mkdir dev
+```
+
+### Criar diretório de arquivos (`storage`)
+
+```bash
+mkdir storage
+sudo chown -R seu_usuario:www-data storage
+chmod 775 storage
 ```
 
 ### Iniciar os containers

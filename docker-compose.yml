@@ -8,6 +8,7 @@ services:
             - "80:80"
         volumes:
             - ./dev:/var/www/html
+            - ./storage:/var/arquivos_publicados
         depends_on:
             - php
         restart: unless-stopped
@@ -19,6 +20,7 @@ services:
         container_name: educar-php
         volumes:
             - ./dev:/var/www/html
+            - ./storage:/var/arquivos_publicados
         restart: unless-stopped
 
     postgres:
