@@ -1,5 +1,11 @@
 FROM httpd:2.4
 
+# Configura Charset global
+COPY conf/charset.conf /usr/local/apache2/conf/extra/charset.conf
+
+RUN grep -q "^IncludeOptional conf/extra/charset.conf" /usr/local/apache2/conf/httpd.conf || \
+    echo "IncludeOptional conf/extra/charset.conf" >> /usr/local/apache2/conf/httpd.conf
+
 # Carrega módulos
 COPY conf/modules.conf /usr/local/apache2/conf/extra/modules.conf
 
