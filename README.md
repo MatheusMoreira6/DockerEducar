@@ -2,9 +2,11 @@
 
 ## Requisitos
 
--   Docker
--   Docker Compose
--   Porta **80** e **5432** livre no host
+- Docker
+- Docker Compose
+- PostgreSQL Client (`pg_restore`, `psql`, `pg_dump`)
+	- Ubuntu: `sudo apt install postgresql-client`
+- Porta **80** e **5432** livre no host
 
 ## Compatibilidade com Windows
 
