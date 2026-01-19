@@ -8,7 +8,7 @@
 
 ## Compatibilidade com Windows
 
-Este projeto **não funciona diretamente no Windows** devido à existência de pastas e arquivos com nomes iguais diferenciados apenas por maiúsculas/minúsculas (ex.: `teste` e `Teste`).  
+O projeto Educar **não funciona diretamente no Windows**, devido à existência de pastas e arquivos com nomes iguais, diferenciados apenas por maiúsculas/minúsculas (ex.: `teste` e `Teste`).
 O Windows não distingue essa diferença, o que causa conflitos no Git.
 
 **No Windows, o uso deve ser feito obrigatoriamente via WSL (Windows Subsystem for Linux).**
