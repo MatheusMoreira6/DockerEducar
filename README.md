@@ -4,9 +4,11 @@
 
 - Docker
 - Docker Compose
-- PostgreSQL Client (`pg_restore`, `psql`, `pg_dump`)
-	- Ubuntu: `sudo apt install postgresql-client`
 - Porta **80** e **5432** livre no host
+- PostgreSQL Client (`pg_restore`, `psql`, `pg_dump`)
+    - Ubuntu: `sudo apt install postgresql-client`
+    - Fedora: `sudo dnf install postgresql`
+    - Arch Linux: `sudo pacman -S postgresql-libs`
 
 ## Compatibilidade com Windows
 
@@ -62,10 +64,18 @@ docker compose up -d
 docker compose down
 ```
 
-## Rodar Composer
+## Executar Comandos
+
+### Composer
 
 ```bash
 docker exec -it educar-php composer install -d /var/www/html/projeto
+```
+
+### Scripts PHP
+
+```bash
+docker exec -it educar-php php /var/www/html/projeto/script.php
 ```
 
 > **Observação:** no container, o caminho `/var/www/html` é um volume espelhado com a pasta `dev` do projeto no host.  
