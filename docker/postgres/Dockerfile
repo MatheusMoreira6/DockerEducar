@@ -1,4 +1,4 @@
-# Imagem oficial do PostgreSQL 15
+# Imagem oficial do PostgreSQL 17
 FROM postgres:17
 
 # Define locale padrão do sistema como pt_BR em ISO-8859-1
