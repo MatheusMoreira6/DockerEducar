@@ -119,3 +119,27 @@ sudo chown -R seu_usuario:www-data dev/
 ```
 
 > Execute este comando **somente após** os projetos já estarem na pasta `dev` e configurados (ex.: branch correta), para evitar problemas de permissão entre usuário e Apache.
+
+## Limpeza de espaço no Docker (PostgreSQL + Volumes)
+
+### Linux e Windows
+
+```bash
+docker-compose down -v
+```
+
+> **Observação:** esse comando remove os containers, redes e volumes definidos no docker-compose.yml do projeto, apagando os dados persistidos (ex: banco de dados).
+
+### Somente no Windows
+
+#### Parar o WSL
+
+```powershell
+wsl --shutdown
+```
+
+#### Compactar disco do Docker (VHDX)
+
+```powershell
+Optimize-VHD -Path "C:\Users\SEU_USER\AppData\Local\Docker\wsl\data\ext4.vhdx" -Mode Full
+```
