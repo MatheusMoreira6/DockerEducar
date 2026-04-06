@@ -28,12 +28,14 @@ Essa pasta será montada como volume no container e utilizada como diretório de
 
 ```bash
 sudo systemctl stop apache2
+sudo systemctl disable apache2
 ```
 
 #### PostgreSQL (porta 5432)
 
 ```bash
 sudo systemctl stop postgresql
+sudo systemctl disable postgresql
 ```
 
 ## Comandos Docker
