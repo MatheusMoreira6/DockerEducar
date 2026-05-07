@@ -30,6 +30,7 @@ RUN apt update && apt install -y \
     gd \
     intl \
     mbstring \
+    calendar \
     pdo \
     pgsql \
     pdo_pgsql \
