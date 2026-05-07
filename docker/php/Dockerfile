@@ -48,6 +48,9 @@ RUN mkdir -p /var/lib/php/8.2/sessions && \
     chown -R www-data:www-data /var/lib/php && \
     chmod 755 /var/lib/php/8.2/sessions
 
+# Configurar Git para aceitar diretórios montados
+RUN git config --global --add safe.directory /var/www/html
+
 # Configurações
 COPY php.ini /usr/local/etc/php/php.ini
 
