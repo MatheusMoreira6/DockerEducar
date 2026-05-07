@@ -27,18 +27,24 @@ Essa pasta será montada como volume no container e utilizada como diretório de
 #### Apache (porta 80)
 
 ```bash
+# Para parar temporariamente o Apache
 sudo systemctl stop apache2
+
+# Para desabilitar completamente a inicialização automática do Apache
 sudo systemctl disable apache2
 ```
 
 #### PostgreSQL (porta 5432)
 
 ```bash
+# Para parar temporariamente o PostgreSQL
 sudo systemctl stop postgresql
+
+# Para desabilitar completamente a inicialização automática do PostgreSQL
 sudo systemctl disable postgresql
 ```
 
-## Comandos Docker
+## Instalação do Projeto via Docker
 
 ### Criar diretório de projetos (`dev`)
 
@@ -54,35 +60,48 @@ sudo chown -R seu_usuario:www-data storage
 chmod 775 storage
 ```
 
-### Iniciar os containers
+### Clonar os projetos no diretório (`dev`)
 
 ```bash
-docker compose up -d
+cd dev
+git clone URL_DO_REPOSITORIO
 ```
 
-### Encerrar os containers
+### Permissões de Pasta (`Usuário:Apache`)
 
 ```bash
+sudo chown -R seu_usuario:www-data dev/
+```
+
+> Execute este comando **somente após** os projetos já estarem na pasta `dev` e configurados (ex.: branch correta), para evitar problemas de permissão entre usuário e Apache.
+
+## Comandos Docker
+
+```bash
+# Iniciar os containers
+docker compose up -d
+
+# Encerrar os containers
 docker compose down
 ```
 
-## Executar Comandos
+## Executar Comandos (`Composer` | `Scripts`)
 
 ### Composer
 
 ```bash
-docker exec -it educar-php composer install -d /var/www/html/projeto
+docker exec -it educar-php composer install -d ./projeto
 ```
 
 ### Scripts PHP
 
 ```bash
-docker exec -it educar-php php /var/www/html/projeto/script.php
+docker exec -it educar-php php ./projeto/script.php
 ```
 
 > **Observação:** no container, o caminho `/var/www/html` é um volume espelhado com a pasta `dev` do projeto no host.  
 > Portanto, substitua `projeto` pelo nome da pasta que está dentro de `dev` onde você deseja executar o Composer.  
-> Exemplo: se o projeto estiver em `dev/meu-projeto`, utilize `-d /var/www/html/meu-projeto`.
+> Exemplo: se o projeto estiver em `dev/meu-projeto`, utilize `-d ./meu-projeto`.
 
 ## Restaurar base
 
@@ -97,6 +116,8 @@ docker exec -it educar-postgres createdb -U postgres cidade_2025-12-16
 ```bash
 pg_restore -h localhost -p 5432 -U postgres -d cidade_2025-12-16 -j 15 /caminho/dump_cidade.pgbkp
 ```
+
+> **Observação:** o caminho `/caminho/dump_cidade.pgbkp` deve ser o caminho do arquivo na sua máquina. Ex: Se o dump estiver em Downloads utilize: `~/Downloads/dump_cidade.pgbkp`.
 
 ## Configuração do banco de dados
 
@@ -113,14 +134,6 @@ DB_USER = "postgres"
 DB_PASS = "postgres"
 DB_NAME = "cidade_2025-12-16"
 ```
-
-## Permissões de Pasta (Usuário + Apache)
-
-```bash
-sudo chown -R seu_usuario:www-data dev/
-```
-
-> Execute este comando **somente após** os projetos já estarem na pasta `dev` e configurados (ex.: branch correta), para evitar problemas de permissão entre usuário e Apache.
 
 ## Limpeza de espaço no Docker (PostgreSQL + Volumes)
 
