@@ -22,7 +22,7 @@ O Windows não distingue essa diferença, o que causa conflitos no Git.
 Os projetos que serão executados no ambiente Docker devem ser clonados dentro da pasta dev, criada na raiz deste repositório.
 Essa pasta será montada como volume no container e utilizada como diretório de trabalho do Apache/PHP.
 
-## Parar serviços do sistema
+## Parar serviços do sistema (`Linux`)
 
 #### Apache (porta 80)
 
@@ -46,19 +46,32 @@ sudo systemctl disable postgresql
 
 ## Instalação do Projeto via Docker
 
-### Criar diretório de projetos (`dev`)
+### Clonar o repositório
 
 ```bash
-mkdir dev
+git clone git@gitlab.com:equipe-de-desenvolvimento/docker-educar.git
+cd docker-educar
 ```
 
-### Criar diretório de arquivos (`storage`)
+### Criar diretórios de projetos (`dev`) e arquivos (`storage`)
 
 ```bash
-mkdir storage
-sudo chown -R seu_usuario:www-data storage
-chmod 775 storage
+mkdir dev storage
 ```
+
+### Configurar variáveis de ambiente
+
+```bash
+cp .env.example .env
+```
+
+```bash
+# Verifique os IDs do seu usuário e do grupo www-data:
+id -u
+getent group www-data | cut -d: -f3
+```
+
+> Valores comuns: UID=1000 e GID=33. Se forem diferentes no seu sistema, ajuste no .env.
 
 ### Clonar os projetos no diretório (`dev`)
 
@@ -67,13 +80,14 @@ cd dev
 git clone URL_DO_REPOSITORIO
 ```
 
-### Permissões de Pasta (`Usuário:Apache`)
-
-```bash
-sudo chown -R seu_usuario:www-data dev/
-```
+### Permissões de grupo (`Apache` + `herança`)
 
 > Execute este comando **somente após** os projetos já estarem na pasta `dev` e configurados (ex.: branch correta), para evitar problemas de permissão entre usuário e Apache.
+
+```bash
+sudo chgrp -R www-data dev storage
+sudo chmod -R 2770 dev storage
+```
 
 ## Comandos Docker
 
@@ -108,13 +122,13 @@ docker exec -it educar-php php ./projeto/script.php
 ### Criar o banco de dados
 
 ```bash
-docker exec -it educar-postgres createdb -U postgres cidade_2025-12-16
+docker exec -it educar-postgres createdb -U postgres cidade_2026-01-01
 ```
 
 ### Restaurar o dump no banco criado
 
 ```bash
-pg_restore -h localhost -p 5432 -U postgres -d cidade_2025-12-16 -j 15 /caminho/dump_cidade.pgbkp
+pg_restore -h localhost -p 5432 -U postgres -d cidade_2026-01-01 -j 5 /caminho/dump_cidade.pgbkp
 ```
 
 > **Observação:** o caminho `/caminho/dump_cidade.pgbkp` deve ser o caminho do arquivo na sua máquina. Ex: Se o dump estiver em Downloads utilize: `~/Downloads/dump_cidade.pgbkp`.

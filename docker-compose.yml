@@ -8,7 +8,7 @@ services:
             - "80:80"
         volumes:
             - ./dev:/var/www/html
-            - ./storage:/var/arquivos_publicados
+            - ./storage:/nvme/arquivos_publicados/
         depends_on:
             - php
         restart: unless-stopped
@@ -18,9 +18,12 @@ services:
             context: ./docker/php
             dockerfile: Dockerfile
         container_name: educar-php
+        user: "${UID}:${GID}"
+        environment:
+            HOME: /tmp
         volumes:
             - ./dev:/var/www/html
-            - ./storage:/var/arquivos_publicados
+            - ./storage:/nvme/arquivos_publicados/
         restart: unless-stopped
 
     postgres:
@@ -29,9 +32,9 @@ services:
             dockerfile: Dockerfile
         container_name: educar-postgres
         environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: postgres
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         ports:
             - "5432:5432"
         volumes:
